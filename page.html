@@ -1,0 +1,840 @@
+<title>OpOrd</title>
+<meta name="description" content="Managed month-end billing for commercial subcontractors. OpOrd collects, checks, and assembles the lien waivers and compliance documents that hold up your pay applications, so every package goes out complete before cutoff.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --ink: #172126;
+    --muted: #53616A;
+    --accent: #236B60;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #E3EEEB;
+    --line: #DADFDA;
+    --line-strong: #B9C2BE;
+    --warn-soft: #F4EBDD;
+    --warn-ink: #7A5A1E;
+    --shadow: 0 1px 2px rgba(23,33,38,.06), 0 8px 24px rgba(23,33,38,.05);
+    --display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --measure: 66ch;
+    --w: 1120px;
+    --gutter: clamp(20px, 4vw, 40px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141A1D; --surface: #1C2428; --ink: #EEF1EF; --muted: #A3B0B5;
+      --accent: #5FB3A3; --accent-ink: #0F1A18; --accent-soft: #1F3531;
+      --line: #2C373C; --line-strong: #46545A;
+      --warn-soft: #34301F; --warn-ink: #E4C98A;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141A1D; --surface: #1C2428; --ink: #EEF1EF; --muted: #A3B0B5;
+    --accent: #5FB3A3; --accent-ink: #0F1A18; --accent-soft: #1F3531;
+    --line: #2C373C; --line-strong: #46545A;
+    --warn-soft: #34301F; --warn-ink: #E4C98A;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: var(--accent); text-underline-offset: .18em; }
+  ul, ol { margin: 0; padding: 0; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: var(--w); margin-inline: auto; padding-inline: var(--gutter); }
+  .measure { max-width: var(--measure); }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--accent); color: var(--accent-ink); padding: 8px 12px; border-radius: 4px; z-index: 100; }
+  .skip:focus { left: 12px; }
+
+  /* type roles */
+  .eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); }
+  .display { font-family: var(--display); font-weight: 400; letter-spacing: -.005em; }
+  .h1 { font-size: clamp(2.5rem, 6.4vw, 4.6rem); line-height: 1.02; }
+  .h2 { font-size: clamp(1.9rem, 3.6vw, 2.75rem); line-height: 1.08; }
+  .h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.3; }
+  .lead { font-size: clamp(1.05rem, 1.5vw, 1.2rem); color: var(--muted); }
+  .muted { color: var(--muted); }
+  .small { font-size: .9rem; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 20px; border-radius: 6px;
+    font: 600 15.5px/1 var(--sans); text-decoration: none; cursor: pointer;
+    border: 1px solid transparent; transition: background-color .15s, border-color .15s, color .15s;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn-primary:hover { filter: brightness(.94); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn svg { width: 16px; height: 16px; }
+  .textlink { font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+  .textlink:hover { border-color: var(--ink); }
+
+  /* sections */
+  section { padding-block: clamp(64px, 9vw, 120px); }
+  .rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
+  .two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+  @media (max-width: 800px) { .two { grid-template-columns: 1fr; } }
+  .sticky-head { position: sticky; top: 96px; }
+  @media (max-width: 800px) { .sticky-head { position: static; } }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 64px; }
+  .brand { display: flex; align-items: baseline; gap: 12px; text-decoration: none; color: var(--ink); }
+  .wordmark { font-family: var(--display); font-size: 1.6rem; letter-spacing: .005em; line-height: 1; }
+  .descriptor { font-size: 12.5px; color: var(--muted); letter-spacing: .02em; }
+  .links { display: flex; gap: 28px; list-style: none; }
+  .links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+  .links a:hover { color: var(--ink); }
+  .nav .btn { padding: 10px 16px; font-size: 14.5px; }
+  @media (max-width: 860px) { .links, .descriptor { display: none; } .nav .btn .l { display: none; } }
+  @media (min-width: 861px) { .nav .btn .s { display: none; } }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 4px; background: var(--warn-soft); color: var(--warn-ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-block: clamp(56px, 8vw, 104px) clamp(48px, 6vw, 88px); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero .h1 { margin-top: 18px; max-width: 14ch; }
+  .hero .h1 em { font-style: italic; color: var(--accent); }
+  .hero .lead { margin-top: 22px; max-width: 54ch; }
+  .actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 32px; }
+  .qualifier { margin-top: 18px; font-size: .92rem; color: var(--muted); }
+
+  /* the month strip */
+  .month { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 20px 16px; box-shadow: var(--shadow); }
+  .month-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .month-head .h3 { font-family: var(--display); font-weight: 400; font-size: 1.35rem; }
+  .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .day {
+    aspect-ratio: 1 / 1; display: flex; align-items: flex-start; justify-content: flex-end;
+    padding: 5px 6px; border-radius: 4px; border: 1px solid var(--line);
+    font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .day.chase { background: var(--warn-soft); border-color: transparent; color: var(--warn-ink); }
+  .day.cutoff { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; position: relative; }
+  .day.cutoff::after { content: "cutoff"; position: absolute; left: 6px; bottom: 5px; font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; }
+  .day.blank { border-color: transparent; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; font-size: 12.5px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .caption { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+  /* ---------- Pain ---------- */
+  .beats { display: grid; gap: 22px; margin-top: 8px; }
+  .beat { display: grid; grid-template-columns: 28px 1fr; gap: 16px; align-items: start; }
+  .beat .tick { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line-strong); display: grid; place-items: center; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .beat p { font-size: 1.05rem; }
+  .example {
+    margin-top: 32px; padding: 22px 24px; border-left: 3px solid var(--accent);
+    background: var(--accent-soft); border-radius: 0 8px 8px 0;
+  }
+  .example p { font-family: var(--display); font-size: 1.35rem; line-height: 1.3; }
+  .example .caption { margin-top: 12px; }
+
+  /* ---------- Proof ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
+  @media (max-width: 720px) { .tiles { grid-template-columns: 1fr; } }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 26px 24px 22px; }
+  .tile .big { font-family: var(--display); font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1; letter-spacing: -.01em; }
+  .tile .big small { font-family: var(--sans); font-size: 1rem; color: var(--muted); margin-left: 6px; letter-spacing: 0; }
+  .tile p { margin-top: 12px; color: var(--muted); font-size: .98rem; }
+  .source { margin-top: 18px; font-size: .85rem; color: var(--muted); }
+
+  /* ---------- Offer list ---------- */
+  .steps { list-style: none; counter-reset: step; display: grid; gap: 0; border-top: 1px solid var(--line); margin-top: 8px; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--display); font-size: 1.3rem; color: var(--accent); }
+  .steps strong { font-weight: 600; }
+  .steps span { color: var(--muted); }
+  .closing { margin-top: 26px; font-weight: 500; }
+
+  /* ---------- Diagram ---------- */
+  .diagram { margin-top: 40px; }
+  .diagram-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .d-wide { min-width: 880px; }
+  .diagram .d-tall { display: none; }
+  @media (max-width: 760px) { .diagram .d-wide { display: none; } .diagram .d-tall { display: block; } .diagram-scroll { overflow: visible; } }
+  .d-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .d-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .d-legend .k { width: 22px; height: 12px; border-radius: 3px; border: 1.5px solid var(--muted); display: inline-block; }
+  .d-legend .k.h { background: var(--accent); border-color: var(--accent); }
+  .d-legend .k.d { border-style: dashed; }
+  .diagram text { font-family: var(--sans); }
+
+  /* ---------- How it works ---------- */
+  .path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); margin-top: 40px; }
+  @media (max-width: 820px) { .path { grid-template-columns: 1fr; } }
+  .stage { border-top: 2px solid var(--ink); padding-top: 18px; }
+  .stage .eyebrow { color: var(--muted); }
+  .stage .h3 { margin-top: 10px; font-family: var(--display); font-weight: 400; font-size: 1.5rem; }
+  .stage p { margin-top: 12px; color: var(--muted); }
+  .stage .then { margin-top: 14px; font-size: .9rem; color: var(--accent); font-weight: 600; }
+  .support { margin-top: 32px; }
+
+  /* ---------- Control ---------- */
+  .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 40px; margin-top: 36px; }
+  @media (max-width: 720px) { .controls { grid-template-columns: 1fr; } }
+  .control { display: grid; grid-template-columns: 22px 1fr; gap: 14px; align-items: start; }
+  .control svg { width: 22px; height: 22px; color: var(--accent); margin-top: 2px; }
+  .control p { color: var(--muted); margin-top: 4px; }
+
+  /* ---------- Fit ---------- */
+  .fit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 36px; }
+  @media (max-width: 720px) { .fit { grid-template-columns: 1fr; } }
+  .fit-col { padding: 24px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
+  .fit-col.yes { border-color: var(--accent); }
+  .fit-col .h3 { display: flex; align-items: center; gap: 10px; }
+  .fit-col ul { list-style: none; margin-top: 14px; display: grid; gap: 10px; color: var(--muted); }
+  .fit-col li { padding-left: 18px; position: relative; }
+  .fit-col li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 1.5px; background: var(--line-strong); }
+  .fit-col.yes li::before { background: var(--accent); }
+
+  /* ---------- About ---------- */
+  .about p { font-size: 1.12rem; }
+  .about .sig { margin-top: 20px; display: flex; align-items: baseline; gap: 12px; }
+  .about .sig .name { font-family: var(--display); font-size: 1.4rem; }
+
+  /* ---------- FAQ ---------- */
+  .faq { margin-top: 28px; border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 18px 0; font-weight: 600; font-size: 1.05rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--display); font-size: 1.5rem; color: var(--accent); line-height: 1; flex: none; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq details p { padding: 0 0 20px; color: var(--muted); max-width: var(--measure); }
+
+  /* ---------- CTA + form ---------- */
+  .cta { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .form-card { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: clamp(20px, 3vw, 32px); position: relative; }
+  .form-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .form-head .h3 { font-size: 1rem; }
+  .field { display: grid; gap: 6px; margin-bottom: 16px; }
+  .field label { font-size: 14px; font-weight: 600; }
+  .field .hint { font-size: 13px; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    width: 100%; font: 16px/1.4 var(--sans); color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: 6px; padding: 11px 12px;
+  }
+  .field textarea { min-height: 88px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  @media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+  .form-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
+  .form-foot .small { max-width: 34ch; }
+  .notice { margin-top: 16px; padding: 12px 14px; border-radius: 6px; font-size: 14.5px; background: var(--warn-soft); color: var(--warn-ink); }
+  .notice.ok { background: var(--accent-soft); color: var(--ink); }
+  .notice a { color: inherit; }
+
+  /* ---------- Footer ---------- */
+  footer.site { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .foot .wordmark { font-size: 1.25rem; color: var(--ink); }
+  .foot ul { list-style: none; display: flex; gap: 22px; flex-wrap: wrap; }
+  .foot a { color: var(--muted); text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+</style>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="OpOrd home">
+      <span class="wordmark" data-site="brand">OpOrd</span>
+      <span class="descriptor">Managed month-end billing</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="links">
+        <li><a href="#what">What we do</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#control">Control</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="badge" id="previewBadge" hidden>Preview</span>
+      <a class="btn btn-primary" href="#contact"><span class="l" data-site="cta">Talk about your month-end</span><span class="s">Talk to us</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Managed month-end billing for commercial subcontractors</p>
+        <h1 class="display h1">Every pay app out the door <em>before cutoff.</em></h1>
+        <p class="lead">We collect, check, and assemble the lien waivers and compliance documents that hold up your payment, then hand you a signature-ready package for every GC, every month.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact" data-site="cta">Talk about your month-end
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="textlink" href="#how">See how it works</a>
+        </div>
+        <p class="qualifier">For commercial subs billing five or more general contractors a month.</p>
+      </div>
+
+      <div class="month" aria-labelledby="monthTitle">
+        <div class="month-head">
+          <h2 class="h3" id="monthTitle">Your billing month</h2>
+          <span class="small muted">30 days</span>
+        </div>
+        <div class="month-grid" role="img" aria-label="A 30-day calendar. Days 21 through 24 are marked as the days spent chasing waivers, and the 25th is marked as the general contractor's cutoff.">
+          <div class="day blank"></div><div class="day blank"></div>
+          <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div>
+          <div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div>
+          <div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div><div class="day">17</div><div class="day">18</div><div class="day">19</div>
+          <div class="day">20</div><div class="day chase">21</div><div class="day chase">22</div><div class="day chase">23</div><div class="day chase">24</div><div class="day cutoff">25</div><div class="day">26</div>
+          <div class="day">27</div><div class="day">28</div><div class="day">29</div><div class="day">30</div><div class="day blank"></div><div class="day blank"></div><div class="day blank"></div>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--warn-soft)"></i>Days spent chasing waivers</span>
+          <span><i style="background:var(--accent)"></i>GC cutoff</span>
+        </div>
+        <p class="caption">Illustrative month — not client data. Cutoffs vary by GC.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- PAIN -->
+  <section id="pain">
+    <div class="wrap two">
+      <div class="sticky-head">
+        <p class="eyebrow">The problem</p>
+        <h2 class="display h2" style="margin-top:14px">The last week of every month.</h2>
+      </div>
+      <div>
+        <div class="beats">
+          <div class="beat"><span class="tick" aria-hidden="true">1</span><p>Each GC wants its own pay-app form, its own waiver form, its own portal, and its own cutoff. Nothing is standard.</p></div>
+          <div class="beat"><span class="tick" aria-hidden="true">2</span><p>Every vendor and sub-sub on the job owes a waiver — the right type, the right through-date, the right amount — and one is always late.</p></div>
+          <div class="beat"><span class="tick" aria-hidden="true">3</span><p>When it is, the GC holds the whole draw. The work is done. The money waits another cycle. You float payroll.</p></div>
+        </div>
+        <div class="example">
+          <p>“We finished the work in June. It’s September. A $4,000 waiver from a supply house didn’t make cutoff, so the draw didn’t go.”</p>
+          <p class="caption">Illustrative example — not a client quote.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- PROOF -->
+  <section id="proof">
+    <div class="wrap">
+      <p class="eyebrow">It isn’t just your office</p>
+      <h2 class="display h2 measure" style="margin-top:14px">Subcontractors are financing the job while the paperwork catches up.</h2>
+      <div class="tiles">
+        <div class="tile">
+          <div class="big num" data-site="stat1.value">96<small>days</small></div>
+          <p data-site="stat1.label">Average wait from submitting a pay app to getting paid.</p>
+        </div>
+        <div class="tile">
+          <div class="big num" data-site="stat2.value">92%</div>
+          <p data-site="stat2.label">Of subcontractors floated payroll from their own pockets in the past year while waiting for payment.</p>
+        </div>
+        <div class="tile">
+          <div class="big num" data-site="stat3.value">5%</div>
+          <p data-site="stat3.label">Of subcontractors are consistently paid on time.</p>
+        </div>
+      </div>
+      <p class="source" data-site="stats.source">Source: Siteline, <em>The State of Subcontractor Billing</em>, 2025 and 2026 industry surveys of construction finance professionals.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- WHAT WE DO -->
+  <section id="what">
+    <div class="wrap two">
+      <div class="sticky-head">
+        <p class="eyebrow">What we take off your plate</p>
+        <h2 class="display h2" style="margin-top:14px">The package, handled. The decisions, yours.</h2>
+        <p class="lead" style="margin-top:18px">For the projects and GCs we agree on, every month:</p>
+      </div>
+      <div>
+        <ol class="steps">
+          <li><div><strong>Know who owes what.</strong> <span>We track which vendors and sub-subs owe documents for each project and pay period.</span></div></li>
+          <li><div><strong>Request early, on the right form.</strong> <span>The GC’s waiver form, the correct through-date, the correct amount — sent at the start of the period, not the end.</span></div></li>
+          <li><div><strong>Follow up until it arrives.</strong> <span>A defined cadence, then a clear escalation to your team for the vendors who need a phone call.</span></div></li>
+          <li><div><strong>Verify every returned document.</strong> <span>Type, date, amount, and signature checked against what was requested — before it goes in the package.</span></div></li>
+          <li><div><strong>Assemble in each GC’s format.</strong> <span>Pay app, waivers, and compliance documents in the order and form that GC’s portal expects.</span></div></li>
+          <li><div><strong>Hand you a signature-ready package.</strong> <span>Before cutoff, with a short list of anything still outstanding and why.</span></div></li>
+        </ol>
+        <p class="closing">You keep every decision. Nothing is signed, submitted, or waived without you.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- DIAGRAM -->
+  <section id="workflow">
+    <div class="wrap">
+      <p class="eyebrow">One month, one project</p>
+      <h2 class="display h2 measure" style="margin-top:14px">What the month looks like once it runs.</h2>
+      <div class="diagram">
+        <div class="diagram-scroll">
+          <!-- Wide layout -->
+          <svg class="d-wide" viewBox="0 0 1120 280" role="img" aria-labelledby="dwTitle dwDesc">
+            <title id="dwTitle">Illustrative month-end billing workflow</title>
+            <desc id="dwDesc">Seven stages from left to right: billing period opens, waiver requests sent, follow-up until returned, documents checked, package assembled, owner reviews and signs, submitted before cutoff. From the checked stage, a dashed side loop goes to “missing item requested” and returns once the item is supplied. The owner review stage is a human decision; the others are automated.</desc>
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="var(--muted)"/>
+              </marker>
+              <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="var(--accent)"/>
+              </marker>
+            </defs>
+            <g font-size="14" fill="var(--ink)" text-anchor="middle">
+              <!-- boxes -->
+              <g>
+                <rect x="0" y="90" width="136" height="64" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <text x="68" y="118">Billing period</text><text x="68" y="137">opens</text>
+              </g>
+              <g>
+                <rect x="164" y="90" width="136" height="64" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <text x="232" y="118">Waiver requests</text><text x="232" y="137">sent</text>
+              </g>
+              <g>
+                <rect x="328" y="90" width="136" height="64" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <text x="396" y="118">Follow-up until</text><text x="396" y="137">returned</text>
+              </g>
+              <g>
+                <rect x="492" y="90" width="136" height="64" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <text x="560" y="118">Documents</text><text x="560" y="137">checked</text>
+              </g>
+              <g>
+                <rect x="656" y="90" width="136" height="64" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <text x="724" y="118">Package</text><text x="724" y="137">assembled</text>
+              </g>
+              <g>
+                <rect x="820" y="90" width="136" height="64" rx="8" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5"/>
+                <text x="888" y="118" fill="var(--accent-ink)" font-weight="600">You review</text><text x="888" y="137" fill="var(--accent-ink)" font-weight="600">and sign</text>
+              </g>
+              <g>
+                <rect x="984" y="90" width="136" height="64" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/>
+                <text x="1052" y="118">Submitted</text><text x="1052" y="137">before cutoff</text>
+              </g>
+              <!-- connectors -->
+              <g stroke="var(--muted)" stroke-width="1.5" fill="none" marker-end="url(#arr)">
+                <path d="M136 122H162"/><path d="M300 122H326"/><path d="M464 122H490"/><path d="M628 122H654"/><path d="M956 122H982"/>
+              </g>
+              <path d="M792 122H818" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#arrA)"/>
+              <!-- human label -->
+              <text x="888" y="72" font-size="11.5" font-weight="600" fill="var(--accent)" letter-spacing="1.2">HUMAN DECISION</text>
+              <!-- loop -->
+              <rect x="478" y="208" width="164" height="48" rx="8" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/>
+              <text x="560" y="237" fill="var(--muted)">Missing item requested</text>
+              <path d="M540 154V206" stroke="var(--muted)" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+              <path d="M580 208V156" stroke="var(--muted)" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+              <text x="510" y="184" font-size="11.5" fill="var(--muted)" text-anchor="end">wrong / absent</text>
+              <text x="612" y="184" font-size="11.5" fill="var(--muted)" text-anchor="start">supplied</text>
+            </g>
+          </svg>
+
+          <!-- Tall layout (phones) -->
+          <svg class="d-tall" viewBox="0 0 360 720" role="img" aria-labelledby="dtTitle dtDesc">
+            <title id="dtTitle">Illustrative month-end billing workflow</title>
+            <desc id="dtDesc">Seven stages top to bottom: billing period opens, waiver requests sent, follow-up until returned, documents checked, package assembled, owner reviews and signs, submitted before cutoff. A dashed “missing item requested” step branches from documents checked and returns once supplied. The owner review stage is a human decision.</desc>
+            <defs>
+              <marker id="arrT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker>
+              <marker id="arrTA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker>
+            </defs>
+            <g font-size="15" fill="var(--ink)">
+              <rect x="40" y="10" width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/><text x="60" y="44">Billing period opens</text>
+              <path d="M180 66V88" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrT)"/>
+              <rect x="40" y="90" width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/><text x="60" y="124">Waiver requests sent</text>
+              <path d="M180 146V168" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrT)"/>
+              <rect x="40" y="170" width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/><text x="60" y="204">Follow-up until returned</text>
+              <path d="M180 226V248" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrT)"/>
+              <rect x="40" y="250" width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/><text x="60" y="284">Documents checked</text>
+              <!-- loop -->
+              <path d="M240 306V338" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrT)"/>
+              <text x="250" y="328" font-size="12" fill="var(--muted)">wrong / absent</text>
+              <rect x="100" y="340" width="220" height="50" rx="8" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="118" y="370" fill="var(--muted)">Missing item requested</text>
+              <path d="M100 365H70V308" stroke="var(--muted)" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arrT)"/>
+              <text x="0" y="345" font-size="12" fill="var(--muted)" transform="rotate(-90 0 345) translate(-345 0)">supplied</text>
+              <path d="M180 306V412" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrT)"/>
+              <rect x="40" y="414" width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/><text x="60" y="448">Package assembled</text>
+              <path d="M180 470V492" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#arrTA)"/>
+              <text x="40" y="510" font-size="11.5" font-weight="600" fill="var(--accent)" letter-spacing="1.2">HUMAN DECISION</text>
+              <rect x="40" y="518" width="280" height="56" rx="8" fill="var(--accent)" stroke="var(--accent)"/><text x="60" y="552" fill="var(--accent-ink)" font-weight="600">You review and sign</text>
+              <path d="M180 574V596" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrT)"/>
+              <rect x="40" y="598" width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="1.5"/><text x="60" y="632">Submitted before cutoff</text>
+            </g>
+          </svg>
+        </div>
+        <div class="d-legend">
+          <span><i class="k" aria-hidden="true"></i>Handled by OpOrd</span>
+          <span><i class="k h" aria-hidden="true"></i>Your approval</span>
+          <span><i class="k d" aria-hidden="true"></i>Exception path</span>
+        </div>
+        <p class="caption">Illustrative workflow — not client data.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2 class="display h2 measure" style="margin-top:14px">Measure it. Fix one cycle. Then keep it running.</h2>
+      <div class="path">
+        <div class="stage">
+          <p class="eyebrow">Step one</p>
+          <h3 class="h3">Billing Assessment</h3>
+          <p>We map your month-end: GCs, forms, portals, vendors, and how often packages come back. You get a baseline and a straight recommendation — even if it’s “fix job costing first.”</p>
+          <p class="then">Output: a baseline and a decision.</p>
+        </div>
+        <div class="stage">
+          <p class="eyebrow">Step two</p>
+          <h3 class="h3">Waiver &amp; Compliance Collection</h3>
+          <p>We stand up collection and verification for one live billing cycle against an agreed target: every required document in hand a set number of days before cutoff.</p>
+          <p class="then">Output: one clean cycle, on record.</p>
+        </div>
+        <div class="stage">
+          <p class="eyebrow">Step three</p>
+          <h3 class="h3">Managed Month-End Billing</h3>
+          <p>We run it every month, extend to full package assembly, and report against your baseline: days to package, kickbacks, and days to payment.</p>
+          <p class="then">Output: month-end becomes a review, not a scramble.</p>
+        </div>
+      </div>
+      <p class="support muted measure">Scope is set by active projects and GCs, with a defined exception allowance. Pricing follows the agreed scope. Where documents come back as scans or phone photos, we use software that reads them and flags anything it isn’t sure about for a person to check.</p>
+      <div class="actions" style="margin-top:28px">
+        <a class="btn btn-primary" href="#contact" data-site="cta">Talk about your month-end</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- CONTROL -->
+  <section id="control">
+    <div class="wrap">
+      <p class="eyebrow">You keep control</p>
+      <h2 class="display h2 measure" style="margin-top:14px">Useful help. Clear boundaries.</h2>
+      <div class="controls">
+        <div class="control">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h16M6 16l9.5-9.5a2.1 2.1 0 013 3L9 19H6v-3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><h3 class="h3">You sign.</h3><p>Every waiver and pay app crosses your desk before it goes anywhere. We prepare; you approve.</p></div>
+        </div>
+        <div class="control">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><h3 class="h3">Agreed access.</h3><p>Which systems and documents we touch is defined in writing before we touch them.</p></div>
+        </div>
+        <div class="control">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><h3 class="h3">Checked, not trusted.</h3><p>Every returned document is verified against what was requested. No item goes in the package on assumption.</p></div>
+        </div>
+        <div class="control">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v9M12 17.5v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/></svg>
+          <div><h3 class="h3">A clear exception path.</h3><p>When a vendor won’t respond or a number doesn’t match, you get the facts with the case attached — not a mess to untangle.</p></div>
+        </div>
+      </div>
+      <p class="support muted measure small">OpOrd prepares billing packages. We don’t give lien-rights, notice-deadline, or legal advice, and we don’t handle disputes with GCs or vendors. Those stay with you and your attorney.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- FIT -->
+  <section id="fit">
+    <div class="wrap">
+      <p class="eyebrow">Is this for you</p>
+      <h2 class="display h2 measure" style="margin-top:14px">Built for a specific kind of shop.</h2>
+      <div class="fit">
+        <div class="fit-col yes">
+          <h3 class="h3">A good fit</h3>
+          <ul>
+            <li>Commercial specialty subs — electrical, mechanical, plumbing, fire protection, drywall</li>
+            <li>Billing 5–20 general contractors a month</li>
+            <li>AIA-style pay apps with waiver packages</li>
+            <li>An office of one or two handling billing alongside everything else</li>
+            <li>A missed cutoff or a kicked-back package in the last year</li>
+          </ul>
+        </div>
+        <div class="fit-col">
+          <h3 class="h3">Probably not</h3>
+          <ul>
+            <li>Residential or time-and-materials-only work</li>
+            <li>A single GC relationship</li>
+            <li>A dedicated billing department that already runs clean</li>
+            <li>Looking for lien-law or collections advice</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2 class="display h2" style="margin-top:14px">Founder-led. Verification-first.</h2>
+      </div>
+      <div>
+        <p data-site="founder.bio">OpOrd is founded by John Vaughan. His background in engineering and operations shapes a simple approach to recurring work: understand the process, make responsibilities explicit, and verify every handoff. This is a founder-led business — the first engagements are run by him directly, which is why we take on a limited number at a time.</p>
+        <div class="sig">
+          <span class="name" data-site="founder.name">John Vaughan</span>
+          <span class="muted small">Founder, OpOrd</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap two">
+      <div class="sticky-head">
+        <p class="eyebrow">Questions</p>
+        <h2 class="display h2" style="margin-top:14px">The things owners ask first.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Do you sign or submit anything for us?</summary>
+          <p>No. We prepare the package and hand it to you ready for signature. You approve, sign, and submit — or authorize the upload after you’ve signed.</p>
+        </details>
+        <details>
+          <summary>Do we need new software?</summary>
+          <p>No. We work from your existing accounting or job-costing system and each GC’s forms and portals. If you already use a billing tool, we work alongside it.</p>
+        </details>
+        <details>
+          <summary>Is this legal advice?</summary>
+          <p>No. Lien rights, notice deadlines, and statutory waiver forms stay with your attorney. We prepare documents on the forms your GCs require; we don’t interpret lien law.</p>
+        </details>
+        <details>
+          <summary>What does it cost?</summary>
+          <p>Scope is set at the assessment, by active projects and GCs, and pricing follows that scope. We’re not publishing a rate card until we’ve run this with customers and can stand behind the numbers.</p>
+        </details>
+        <details>
+          <summary>What happens when a vendor never responds?</summary>
+          <p>We exhaust the agreed follow-up cadence, then hand you a specific exception — vendor, project, document, amount, attempts made — so your team can make one phone call instead of a week of them.</p>
+        </details>
+        <details>
+          <summary>Will this get us paid faster?</summary>
+          <p>We don’t promise that, because GCs and owners control payment timing. What we commit to is the part that causes holds: complete packages, in the right format, before cutoff. We baseline your days-to-package, kickback rate, and days-to-payment at the start and report actuals against them.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA + FORM -->
+  <section id="contact" class="cta">
+    <div class="wrap two">
+      <div class="sticky-head">
+        <p class="eyebrow">Start here</p>
+        <h2 class="display h2" style="margin-top:14px">Which GC held your last draw?</h2>
+        <p class="lead" style="margin-top:18px">Tell us how many GCs you bill, what usually goes wrong, and when your next cutoff is. We’ll start by deciding whether this is the right problem to fix.</p>
+      </div>
+      <div class="form-card">
+        <div class="form-head">
+          <h3 class="h3">Talk about your month-end</h3>
+          <span class="badge" id="formBadge" hidden>Preview — not connected</span>
+        </div>
+        <form id="inquiry" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-email">Work email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" required>
+            </div>
+            <div class="field">
+              <label for="f-gcs">GCs billed per month</label>
+              <select id="f-gcs" name="gcs" required>
+                <option value="" selected disabled>Choose one</option>
+                <option>1–4</option>
+                <option>5–10</option>
+                <option>11–20</option>
+                <option>More than 20</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-issue">What usually holds up your package?</label>
+            <textarea id="f-issue" name="issue" placeholder="e.g. lower-tier waivers from suppliers, one GC’s portal, retainage math…"></textarea>
+            <span class="hint">Please don’t include confidential customer information.</span>
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit" id="submitBtn">Talk about your month-end</button>
+            <span class="small muted">Founder-led. We reply personally, and we don’t sell your details.</span>
+          </div>
+          <div class="notice" id="formNotice" hidden role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <span class="wordmark" data-site="brand">OpOrd</span>
+    <ul>
+      <li id="footEmail" hidden><a data-site="contact.emailLink" href="#contact">Email</a></li>
+      <li id="footLinkedIn" hidden><a data-site="social.linkedin" href="#" rel="me noopener" target="_blank">LinkedIn</a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
+    <span>© <span data-site="year">2026</span> <span data-site="brand">OpOrd</span>. Managed month-end billing for commercial subcontractors.</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   SITE CONFIG — edit here; the page reads from this object.
+   ============================================================ */
+const SITE = {
+  status: "live",               // "preview" (badge shown, noindex) | "live"
+  brand: "OpOrd",
+  domain: "https://opord.co",
+  cta: "Talk about your month-end",
+  founder: {
+    name: "John Vaughan",
+    bio: "OpOrd is founded by John Vaughan. His background in engineering and operations shapes a simple approach to recurring work: understand the process, make responsibilities explicit, and verify every handoff. This is a founder-led business — the first engagements are run by him directly, which is why we take on a limited number at a time."
+  },
+  contact: {
+    mode: "mailto",             // "preview" | "mailto" | "endpoint"
+    email: "hello@opord.co",    // used by "mailto" mode and the footer link when set
+    endpoint: "",               // used by "endpoint" mode: a POST URL you control
+    bookingUrl: ""              // optional: if set, primary CTAs link here instead of the form
+  },
+  social: { linkedin: "" },     // set to your verified LinkedIn URL to show the footer link
+  stats: {
+    stat1: { value: "96<small>days</small>", label: "Average wait from submitting a pay app to getting paid." },
+    stat2: { value: "92%", label: "Of subcontractors floated payroll from their own pockets in the past year while waiting for payment." },
+    stat3: { value: "5%",  label: "Of subcontractors are consistently paid on time." },
+    source: "Source: Siteline, <em>The State of Subcontractor Billing</em>, 2025 and 2026 industry surveys of construction finance professionals."
+  }
+};
+
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const get = (path) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), SITE);
+
+  // Fill data-site bindings (text by default; HTML for stats/source which carry markup)
+  $$("[data-site]").forEach(el => {
+    const key = el.getAttribute("data-site");
+    if (key === "year") { el.textContent = new Date().getFullYear(); return; }
+    if (key === "contact.emailLink") { return; }
+    if (key === "social.linkedin") { return; }
+    if (key.startsWith("stat")) {
+      const v = key.startsWith("stats.") ? get(key) : get("stats." + key);
+      if (v) el.innerHTML = v; return;
+    }
+    const v = get(key);
+    if (typeof v === "string" && v) el.textContent = v;
+  });
+
+  // Preview badges + robots
+  const isPreview = SITE.status !== "live";
+  $("#previewBadge").hidden = !isPreview;
+  const robots = document.querySelector('meta[name="robots"]');
+  if (robots) robots.setAttribute("content", isPreview ? "noindex, nofollow" : "index, follow");
+
+  // Footer links
+  if (SITE.contact.email) {
+    const a = $("#footEmail a"); a.href = "mailto:" + SITE.contact.email; a.textContent = SITE.contact.email;
+    $("#footEmail").hidden = false;
+  }
+  if (SITE.social.linkedin) {
+    $("#footLinkedIn a").href = SITE.social.linkedin;
+    $("#footLinkedIn").hidden = false;
+  }
+
+  // Booking URL overrides CTAs
+  if (SITE.contact.bookingUrl) {
+    $$('a[href="#contact"]').forEach(a => { a.href = SITE.contact.bookingUrl; a.target = "_blank"; a.rel = "noopener"; });
+  }
+
+  // Form behaviour by contact mode
+  const form = $("#inquiry"), notice = $("#formNotice"), badge = $("#formBadge"), btn = $("#submitBtn");
+  const mode = SITE.contact.mode;
+  if (mode === "preview" || (mode === "mailto" && !SITE.contact.email) || (mode === "endpoint" && !SITE.contact.endpoint)) {
+    badge.hidden = false;
+  }
+  const show = (msg, ok) => { notice.innerHTML = msg; notice.className = "notice" + (ok ? " ok" : ""); notice.hidden = false; };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    if (mode === "mailto" && SITE.contact.email) {
+      const subject = encodeURIComponent(`Month-end billing — ${data.company}`);
+      const body = encodeURIComponent(
+        `Name: ${data.name}\nCompany: ${data.company}\nGCs billed per month: ${data.gcs}\n\nWhat holds up the package:\n${data.issue || "(not provided)"}`);
+      window.location.href = `mailto:${SITE.contact.email}?subject=${subject}&body=${body}`;
+      show("Your email app should open with this filled in. If it doesn’t, write to <a href=\"mailto:" + SITE.contact.email + "\">" + SITE.contact.email + "</a>.", true);
+      return;
+    }
+    if (mode === "endpoint" && SITE.contact.endpoint) {
+      btn.disabled = true;
+      try {
+        const r = await fetch(SITE.contact.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+        if (r.ok) { show("Received. We’ll reply personally — usually within a few business days.", true); form.reset(); }
+        else { show("That didn’t go through (server responded " + r.status + "). Please try again" + (SITE.contact.email ? " or email <a href=\"mailto:" + SITE.contact.email + "\">" + SITE.contact.email + "</a>." : ".")); }
+      } catch (err) {
+        show("That didn’t go through — check your connection and try again" + (SITE.contact.email ? " or email <a href=\"mailto:" + SITE.contact.email + "\">" + SITE.contact.email + "</a>." : "."));
+      } finally { btn.disabled = false; }
+      return;
+    }
+    // Preview: never claim a message was sent
+    show("This is a preview. The contact route isn’t connected yet, so nothing was sent. Once it is, this form will reach the founder directly.");
+  });
+})();
+</script>
