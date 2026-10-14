@@ -216,13 +216,14 @@ header.site {
   display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px 12px 14px; border-radius: 999px;
   border: 1px solid rgba(255,255,255,.28); background: rgba(14,20,23,.62); color: #fff;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  font: 600 15px/1 var(--sans); cursor: pointer; transition: background-color .15s, transform .15s;
+  font: 600 15px/1 var(--sans); white-space: nowrap; cursor: pointer; transition: background-color .15s, transform .15s;
 }
 .film .play:hover { background: rgba(14,20,23,.8); }
 .film .play .ic { width: 28px; height: 28px; border-radius: 50%; background: #fff; color: var(--night); display: grid; place-items: center; }
 .film .play .ic svg { width: 11px; height: 11px; margin-left: 2px; }
 .film .play .len { font-weight: 500; color: rgba(255,255,255,.75); }
 .film.playing .play { display: none; }
+.film:not(.playing) video { cursor: pointer; }
 .film-meta { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; color: var(--muted); }
 .script { margin-top: 18px; border-top: 1px solid var(--line); }
 .script summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px; padding: 14px 0; font-weight: 600; font-size: .98rem; }

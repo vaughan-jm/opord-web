@@ -37,7 +37,7 @@ With script, the page shows the result in place; without it, the engine sends th
 
 ## The film
 
-`media/opord-film.mp4` (1080p H.264), `opord-film-720.mp4` (phones), `opord-film.webm` (VP9 for browsers without H.264), `opord-film-poster.jpg`, and `opord-film.vtt` captions. It plays muted while on screen (not for reduced-motion or data-saver users); “Play with sound” restarts it with sound and controls. Sources live outside this repo.
+`media/opord-film.mp4` (1080p H.264), `opord-film-720.mp4` (phones), `opord-film.webm` (VP9 for browsers without H.264), `opord-film-poster.jpg`, and `opord-film.vtt` captions. Nothing plays until a visitor asks: a tap on the film, its “Play with sound” button or a “Watch the film” link starts it from the top with sound and the browser’s controls, and at the end it returns to the poster. There is no autoplay and no pausing on scroll. Sources live outside this repo.
 
 ## Deploy
 

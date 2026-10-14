@@ -4,7 +4,6 @@
   'use strict';
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- mobile menu ---------- */
   var menu = $('.menu-btn');
@@ -20,42 +19,27 @@
     window.addEventListener('resize', function () { if (window.innerWidth > 860) close(); });
   }
 
-  /* ---------- the film ---------- */
+  /* ---------- the film ----------
+     Nothing plays until someone asks. A tap anywhere on the film, its button, or a "Watch the film"
+     link starts it from the top, with sound and the browser's own controls. No autoplay, no pausing
+     on scroll: the visitor is in charge. Without script, the native controls work as usual. */
   $$('.film').forEach(function (box) {
     var v = $('video', box), btn = $('.play', box);
-    if (!v) return;
-    var withSound = false;
-    var saveData = !!(navigator.connection && navigator.connection.saveData);
-    // With JS, the poster and one clear button replace the native controls until someone presses play.
-    if (btn) { btn.hidden = false; v.controls = false; }
-    var loopMuted = function () {
-      if (withSound || reduced || saveData) return;
-      v.muted = true; v.loop = true;
-      var p = v.play(); if (p && p.catch) p.catch(function () {});
-    };
-    // Muted preview plays only while the film is on screen (never for reduced-motion or data-saver users).
-    if ('IntersectionObserver' in window && !reduced && !saveData) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (withSound) { if (!e.isIntersecting && !v.paused) v.pause(); return; }
-          if (e.isIntersecting && e.intersectionRatio >= 0.5) loopMuted(); else if (!v.paused) v.pause();
-        });
-      }, { threshold: [0, 0.5, 1] }).observe(box);
-    }
-    var startWithSound = function () {
-      withSound = true;
+    if (!v || !btn) return;
+    btn.hidden = false; v.controls = false;          // the poster and one clear button, until it starts
+    var start = function () {
+      if (box.classList.contains('playing')) return;
       box.classList.add('playing');
-      v.loop = false; v.muted = false; v.controls = true;
-      try { v.currentTime = 0; } catch (e) {}
-      var p = v.play(); if (p && p.catch) p.catch(function () { v.muted = true; v.play(); });
+      v.controls = true; v.muted = false;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});     // if the browser refuses, the native controls are there
       v.focus({ preventScroll: true });
     };
-    if (btn) btn.addEventListener('click', startWithSound);
-    v.addEventListener('ended', function () {
-      if (!withSound) return;
-      // Rest on the end card rather than the fade to black.
-      try { v.currentTime = Math.max(0, v.duration - 1.4); } catch (e) {}
-      v.pause();
+    btn.addEventListener('click', start);
+    v.addEventListener('click', function () { if (!box.classList.contains('playing')) start(); });
+    $$('a[href="#film"]').forEach(function (a) { a.addEventListener('click', start); });
+    v.addEventListener('ended', function () {      // back to the poster and the button, ready to watch again
+      box.classList.remove('playing'); v.controls = false; v.load();
     });
   });
 
