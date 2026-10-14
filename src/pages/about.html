@@ -1,0 +1,87 @@
+<!--meta {"path": "/about", "title": "About", "description": "OpOrd is a founder-led company that runs month-end billing for commercial subcontractors. Meet the founder, how we work, and the company behind the name.", "nav": "about"} -->
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">About OpOrd</p>
+      <h1 class="display h1-sub">Founder-led. <em>Verification-first.</em></h1>
+      <p class="lead">OpOrd runs month-end billing for commercial subcontractors: the waiver requests, the follow-ups, the checks and the packages. You keep the decisions and the signature.</p>
+    </div>
+  </section>
+
+  <section class="page-body" aria-labelledby="founderTitle">
+    <div class="wrap two">
+      <div>
+        <div class="portrait lg">
+          <picture>
+            <source type="image/webp" srcset="/media/john-vaughan-400.webp 400w, /media/john-vaughan-800.webp 800w" sizes="(max-width: 800px) 90vw, 380px">
+            <img src="/media/john-vaughan-800.jpg" srcset="/media/john-vaughan-400.jpg 400w, /media/john-vaughan-800.jpg 800w" sizes="(max-width: 800px) 90vw, 380px" width="800" height="800" alt="Portrait of {{founder.name}}, founder of OpOrd" decoding="async">
+          </picture>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">The founder</p>
+        <h2 class="display h2 mt-s" id="founderTitle">{{founder.name}}</h2>
+        <p class="muted mt-s">{{founder.title}}, OpOrd</p>
+        <div class="prose mt-l">
+          <p>OpOrd is founded by {{founder.name}}. His background in engineering and operations shapes a simple approach to recurring work: understand the process, make responsibilities explicit, and verify every handoff.</p>
+          <p>Month-end billing is exactly that kind of work. Every pay app depends on a dozen small handoffs — a PM’s numbers, a supplier’s waiver, a GC’s form — and one missed handoff can hold the whole draw. OpOrd exists to run those handoffs on a schedule, check each one, and leave the owner with a package to review rather than a week to chase.</p>
+          <p>This is a founder-led business. The first engagements are run by {{founder.name}} directly, which is why we take on a limited number at a time.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="/contact">{{cta}}</a>
+          <a class="textlink" href="/#film">Watch the {{film.length}} film</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section aria-labelledby="howWeWork">
+    <div class="wrap">
+      <p class="eyebrow">How we work</p>
+      <h2 class="display h2 measure mt-s" id="howWeWork">Three rules we don’t bend.</h2>
+      <div class="grid-3 mt-xl">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3 class="h3">Make it explicit.</h3>
+          <p>Who owes which document, on which form, for which pay period, by which date. Written down, not remembered.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="h3">Verify every handoff.</h3>
+          <p>Each returned waiver is checked for type, through-date, amount and signature before it goes in a package.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h16M6 16l9.5-9.5a2.1 2.1 0 013 3L9 19H6v-3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="h3">You decide.</h3>
+          <p>Nothing is signed, submitted or waived without you. We prepare; you approve. Lien law stays with your attorney.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section aria-labelledby="companyTitle">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">The company</p>
+        <h2 class="display h2 mt-s" id="companyTitle">Who you’re working with.</h2>
+      </div>
+      <div>
+        <dl class="facts">
+          <dt>Trade name</dt><dd>{{brand}}</dd>
+          <dt>Legal name</dt><dd>{{legalName}}, {{entity}}</dd>
+          <dt>What we do</dt><dd>{{tagline}}</dd>
+          {{#if email}}<dt>Email</dt><dd><a href="mailto:{{email}}">{{email}}</a></dd>{{/if}}
+          {{#if phone}}<dt>Phone</dt><dd><a href="tel:{{phone}}">{{phoneDisplay}}</a></dd>{{/if}}
+          {{#if address}}<dt>Mailing address</dt><dd><address>{{addressHtml}}</address></dd>{{/if}}
+          <dt>Website</dt><dd><a href="/">opord.co</a></dd>
+        </dl>
+        <p class="muted mt-l">{{brand}} is a trade name of {{legalName}}. Our contracts and invoices are issued by {{legalName}}, doing business as {{brand}}.</p>
+      </div>
+    </div>
+  </section>
+
+{{> band}}

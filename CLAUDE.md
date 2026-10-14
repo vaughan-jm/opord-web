@@ -1,10 +1,11 @@
 # OpOrd site — agent notes
 
-- Host: Cloudflare Pages project `opord`, Git-connected to this repo on `main`. Pushes deploy automatically.
+- Host: Cloudflare Pages project `opord`, Git-connected to this repo on `main`. Pushes deploy automatically. No build step on Pages: the repo root ships as-is.
 - Domain: opord.co / www.opord.co (do not remove custom domains).
-- No build step for Pages: the deploy output is the repo root. `index.html` is the page that ships.
-- Editing flow: change `page.html`, run `python3 build.py`, commit both `page.html` and `index.html`.
-- All identity, contact and proof settings live in the `SITE` object at the bottom of `page.html`.
-- Contact route: `mailto:hello@opord.co` until a booking URL is approved (then set `SITE.contact.bookingUrl`).
-- Do not change Cloudflare DNS. Google Workspace MX/TXT records are separate — leave them alone.
-- Do not add testimonials, logos, case studies, pricing, or any founder aviation/military references. See README.
+- Editing flow: change `src/` (pages, layout, partials, `site.json`) or `assets/`, run `python3 build.py`, commit the sources and the generated root `.html` files, `sitemap.xml` and `robots.txt` together.
+- Contact details, legal name and the engine URL live in `src/site.json`; empty values are hidden on every page.
+- Forms post to the OpOrd engine (`/hooks/inquiry`, `/hooks/optin` on app.opord.co). Keep `_headers` `connect-src` / `form-action` in step with `engine`.
+- The SMS page, privacy policy and text message terms carry carrier-required wording (opt-in, frequency, rates, STOP/HELP, no sharing of mobile information). Change it only together with the engine's consent wording in `src/worker/site.mjs`.
+- Do not change Cloudflare DNS. Email (MX/TXT) records are separate — leave them alone.
+- Do not add testimonials, logos, case studies, pricing, or any founder aviation/military references.
+- Fonts are self-hosted (SIL OFL, `assets/fonts`). Don't add third-party scripts, trackers or fonts: the privacy policy says there are none.

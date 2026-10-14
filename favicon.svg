@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="OpOrd">
-  <rect width="32" height="32" rx="6" fill="#F7F6F2"/>
-  <text x="16" y="23" text-anchor="middle" font-family="'Instrument Serif', Georgia, serif" font-size="20" fill="#236B60">O</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#236B60"/><circle cx="32" cy="32" r="15.5" fill="none" stroke="#F7F6F2" stroke-width="8"/></svg>

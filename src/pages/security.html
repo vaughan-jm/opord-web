@@ -1,0 +1,97 @@
+<!--meta {"path": "/security", "title": "Security", "description": "How OpOrd protects billing data: signed-in access only, encryption in transit and at rest for secrets, read-only bank connections, no passwords, and signatures with an audit trail.", "nav": "security"} -->
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Security</p>
+      <h1 class="display h1-sub">Your billing data, <em>handled with care.</em></h1>
+      <p class="lead">Pay apps, lien waivers and bank deposits are sensitive. Here’s how we protect them, in plain terms and without overclaiming.</p>
+    </div>
+  </section>
+
+  <section class="page-body" aria-label="How we protect your data">
+    <div class="wrap">
+      <div class="grid-2">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <h2 class="h3">Signed-in access only</h2>
+          <p>Our billing desk sits behind Cloudflare Access. Only people we have named can sign in, and the desk checks every request against that list before it shows anything.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h2 class="h3">Encrypted, in transit and at rest</h2>
+          <p>Every page, link and connection uses HTTPS. Bank connection tokens are encrypted with AES-256-GCM using a key kept outside the database.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h2 class="h3">Read-only bank access</h2>
+          <p>If you choose to connect a bank account, it’s through Plaid and read-only: we see deposits so we can match payments to pay apps. We can’t move money.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M6 18L18 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+          <h2 class="h3">We never ask for your passwords</h2>
+          <p>Not for your bank, your email or your accounting system. Where a GC portal needs an upload, you upload the package or add us as a user you can remove at any time.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h16M6 16l9.5-9.5a2.1 2.1 0 013 3L9 19H6v-3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h2 class="h3">Signatures with an audit trail</h2>
+          <p>Signing runs through BoldSign, which records who signed what and when. Signing links expire, and if the numbers behind a package change, the old link stops working and a corrected one is sent.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h2 class="h3">Every change on the record</h2>
+          <p>The desk records what changed, when, and by whom. Updates from our providers — replies, signatures, bank activity — are accepted only with a valid cryptographic signature.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h2 class="h3">Only what billing needs</h2>
+          <p>We collect what month-end billing requires and nothing more. Our website has no advertising trackers or third-party analytics.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1014.3-4.9M20 4v4h-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h2 class="h3">Your records, your call</h2>
+          <p>At the end of an engagement we return your records and delete them from our systems, except anything we’re required by law to keep.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section aria-labelledby="providersTitle">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">Our providers</p>
+        <h2 class="display h2 mt-s" id="providersTitle">Established services, chosen on purpose.</h2>
+      </div>
+      <div class="prose">
+        <p>We build on providers that specialize in security for their part of the job:</p>
+        <ul>
+          <li><strong>Cloudflare</strong> — hosting, database, sign-in protection and network security.</li>
+          <li><strong>Quo (OpenPhone)</strong> — text messages, only to people who have opted in.</li>
+          <li><strong>Google Workspace</strong> — email.</li>
+          <li><strong>BoldSign</strong> — electronic signatures and signing records.</li>
+          <li><strong>Plaid</strong> — read-only bank connections, for clients who choose to connect.</li>
+          <li><strong>Anthropic</strong> — reading figures from photos and messages, with a person checking anything uncertain.</li>
+        </ul>
+        <p>Each receives only what its job needs. See our <a href="/privacy#share">Privacy Policy</a> for how information is shared.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section aria-labelledby="honestTitle">
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">Straight answers</p>
+        <h2 class="display h2 mt-s" id="honestTitle">What we don’t claim.</h2>
+      </div>
+      <div class="prose">
+        <p>We’re a small company. We don’t hold a SOC 2 report or a similar certification today. If your process includes a security questionnaire, send it to us — we’ll answer it in writing.</p>
+        <h3>Found a problem?</h3>
+        <p>If you think you’ve found a security issue in our website or desk, please tell us {{#if email}}at <a href="mailto:{{email}}?subject=Security">{{email}}</a> with “Security” in the subject{{else}}through our <a href="/contact">contact page</a>{{/if}}. We’ll acknowledge it within two business days and keep you posted while we fix it. Please don’t access other people’s data or disrupt the service while testing.</p>
+      </div>
+    </div>
+  </section>
+
+{{> band}}

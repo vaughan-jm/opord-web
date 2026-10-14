@@ -1,0 +1,17 @@
+/index.html          /             301
+/page.html           /             301
+/privacy-policy      /privacy      301
+/terms-of-service    /terms        301
+/tos                 /terms        301
+/text-messages       /sms          301
+/texting             /sms          301
+/sms-terms           /terms#sms    301
+/opt-in              /sms#opt-in   301
+/optin               /sms#opt-in   301
+/contact-us          /contact      301
+/about-us            /about        301
+/film                /#film        301
+/src/*               /             301
+/build.py            /             301
+/README.md           /             301
+/CLAUDE.md           /             301

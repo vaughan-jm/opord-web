@@ -1,0 +1,93 @@
+<!--meta {"path": "/contact", "title": "Contact", "description": "Talk to OpOrd about your month-end billing. Tell us how many GCs you bill and what usually holds up your package; we reply personally.", "nav": "contact"} -->
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1 class="display h1-sub">Talk about your <em>month-end.</em></h1>
+      <p class="lead">Tell us how many GCs you bill, what usually goes wrong, and when your next cutoff is. We’ll start by deciding whether this is the right problem to fix.</p>
+    </div>
+  </section>
+
+  <section class="page-body">
+    <div class="wrap contact-grid">
+      <div class="form-card">
+        <form id="inquiry" action="{{engine}}/hooks/inquiry" method="post" data-ajax data-fallback="{{#if email}}You can also email <a href=&quot;mailto:{{email}}&quot;>{{email}}</a>.{{/if}}">
+          <div class="form-head">
+            <h2 class="h3">Send us a note</h2>
+            <p>Founder-led: a person reads every message and replies personally, usually within a business day or two.</p>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="f-email">Work email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" required maxlength="160">
+            </div>
+            <div class="field">
+              <label for="f-gcs">GCs billed per month</label>
+              <select id="f-gcs" name="gcs" required>
+                <option value="" selected disabled>Choose one</option>
+                <option>1–4</option>
+                <option>5–10</option>
+                <option>11–20</option>
+                <option>More than 20</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-issue">What usually holds up your package? <span class="opt">(optional)</span></label>
+            <textarea id="f-issue" name="message" maxlength="4000" placeholder="e.g. lower-tier waivers from suppliers, one GC’s portal, retainage math…"></textarea>
+            <span class="hint">Please don’t include bank details, passwords, or confidential customer information.</span>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="f-website">Leave this empty</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit">Send</button>
+            <span class="small muted">We don’t sell your details or add you to a mailing list.</span>
+          </div>
+          <p class="fine">By sending this you agree to our <a href="/terms">Terms</a>. We use what you send only to reply and to follow up on this conversation — see our <a href="/privacy">Privacy Policy</a>.</p>
+          <div class="status" role="status" aria-live="polite" hidden></div>
+        </form>
+        <div class="done" tabindex="-1" hidden>
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Thank you. It’s with us.</h3>
+          <p data-msg>We reply personally, usually within a business day or two.</p>
+        </div>
+      </div>
+
+      <aside class="reach" aria-label="Other ways to reach us">
+        <div>
+          <h2>Other ways to reach us</h2>
+        </div>
+        {{#if email}}<div class="item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><a href="mailto:{{email}}">{{email}}</a><p>For anything at all.</p></div>
+        </div>{{/if}}
+        {{#if phone}}<div class="item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <div><a href="tel:{{phone}}">{{phoneDisplay}}</a><p>Call or text, weekdays.</p></div>
+        </div>{{/if}}
+        {{#if address}}<div class="item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          <div><address>{{legalName}}<br>{{addressHtml}}</address><p>Mailing address.</p></div>
+        </div>{{/if}}
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <div><a href="/sms">Billing texts</a><p>Work with one of our clients and want our texts about pay apps and waivers? Opt in on our text messages page.</p></div>
+        </div>
+        <div class="callout plain">
+          <p class="small"><strong>{{brand}}</strong> is a trade name of {{legalName}}, {{entity}}.</p>
+        </div>
+      </aside>
+    </div>
+  </section>

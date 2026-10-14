@@ -1,0 +1,111 @@
+<!--meta {"path": "/sms", "title": "Text messages", "description": "OpOrd billing texts: what we send to clients’ owners, project managers and vendors, how to opt in, message frequency, and how to get help or stop (reply HELP or STOP).", "nav": "sms"} -->
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Text messages</p>
+      <h1 class="display h1-sub">Billing texts, <em>only by consent.</em></h1>
+      <p class="lead">OpOrd texts the people behind each pay application — owners, project managers, and vendors’ billing contacts — about progress numbers, lien waivers and signatures. Here’s exactly what we send, how to opt in, and how to stop.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#opt-in">Opt in to billing texts</a>
+        <a class="textlink" href="#stop">How to stop or get help</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-body">
+    <div class="wrap contact-grid">
+      <div class="prose">
+        <h2 id="program">The program</h2>
+        <p><strong>OpOrd billing texts</strong> are operational messages about month-end billing for commercial subcontractors that use OpOrd. Depending on your role, we may text you to:</p>
+        <ul>
+          <li>ask for this month’s progress numbers for a pay application, or confirm the numbers we have;</li>
+          <li>request a lien waiver, remind you about one, or confirm it was received;</li>
+          <li>send a secure link to review and sign a waiver or a pay application package;</li>
+          <li>confirm that a pay application was submitted, or that a payment arrived.</li>
+        </ul>
+        <p>We don’t send marketing or promotional texts.</p>
+
+        <h2 id="sender">Who sends them</h2>
+        <p>Texts come from <strong>OpOrd</strong>, a trade name of {{legalName}}{{#if phone}}, from {{phoneDisplay}}{{/if}}. The first text we send you says which company it’s for — for example, “This is OpOrd Billing for Sample Mechanical.” Links in our texts point to <strong>app.opord.co</strong>.</p>
+
+        <h2 id="frequency">How often</h2>
+        <p>Message frequency varies with the billing cycle. Most people get a few texts around each monthly pay application, and fewer in quiet months. We text on weekdays, during business hours.</p>
+
+        <h2 id="cost">What it costs</h2>
+        <p>OpOrd doesn’t charge you for texts. <strong>Message and data rates may apply</strong>, depending on your mobile plan.</p>
+
+        <h2 id="stop">How to stop or get help</h2>
+        <div class="keys">
+          <div class="key"><b>STOP</b><p>Opt out at any time. We’ll send one message confirming you’re unsubscribed, and nothing after it. STOPALL, UNSUBSCRIBE, CANCEL, END and QUIT work too.</p></div>
+          <div class="key"><b>HELP</b><p>Get a reply with who we are and how to reach us{{#if email}} — or email <a href="mailto:{{email}}">{{email}}</a>{{/if}}.</p></div>
+          <div class="key"><b>START</b><p>Opt back in after replying STOP{{#if phone}}, or opt in for the first time by texting START to {{phoneDisplay}}{{/if}}.</p></div>
+        </div>
+        <p>If you opt out, we’ll reach you about billing another way, such as email, when a step needs you.</p>
+
+        <h2 id="privacy">Your number and your privacy</h2>
+        <p>We use your mobile number only to send the messages described on this page. We don’t sell it. <strong>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes.</strong> Text messaging originator opt-in data and consent will not be shared with any third parties. We do use service providers to deliver messages, under contracts that limit what they can do with the information. Our <a href="/privacy">Privacy Policy</a> has the details.</p>
+
+        <h2 id="carriers">Carriers</h2>
+        <p>Carriers are not liable for delayed or undelivered messages. The full text message terms are part of our <a href="/terms#sms">Terms of Service</a>.</p>
+
+        <h2 id="samples">Sample messages</h2>
+        <div class="samples">
+          <div class="sample"><span class="who">To a project manager</span><p class="bubble">Riverside Medical: pay app due Thursday the 25th. Last month: Ductwork 80%, Equipment 65%. Reply with this month’s numbers, a photo of your marked-up SOV, or a voice note. This is OpOrd Billing for Sample Mechanical. Reply STOP to opt out.</p></div>
+          <div class="sample"><span class="who">To a vendor’s billing contact</span><p class="bubble">Sample Mechanical is paying you $4,200.00 for Riverside Medical. Sign the conditional waiver so it can go in this month’s draw: https://app.opord.co/s/7Hk2mQ9x This is OpOrd Billing for Sample Mechanical. Reply STOP to opt out.</p></div>
+          <div class="sample"><span class="who">A reminder</span><p class="bubble">Reminder: your $4,200.00 waiver for Riverside Medical is waiting. It takes about a minute: https://app.opord.co/s/7Hk2mQ9x</p></div>
+          <div class="sample"><span class="who">To the owner who signs</span><p class="bubble">October: 6 packages ready, $142,146.37. Tap once to review and sign all 6: https://app.opord.co/s/Qp4Lr8Tz</p></div>
+          <div class="sample"><span class="who">When you opt in</span><p class="bubble">OpOrd: You’re signed up for billing texts from OpOrd (Everly Mews LLC) about pay apps and lien waivers. Msg frequency varies. Msg &amp; data rates may apply. Reply HELP for help, STOP to opt out.</p></div>
+        </div>
+        <p class="note">Names, amounts and links above are examples.</p>
+      </div>
+
+      <aside id="opt-in" aria-labelledby="optTitle">
+        <div class="form-card">
+          <form id="optin" action="{{engine}}/hooks/optin" method="post" data-ajax data-fallback="{{#if email}}You can also email <a href=&quot;mailto:{{email}}&quot;>{{email}}</a>.{{/if}}">
+            <div class="form-head">
+              <h2 class="h3" id="optTitle">Opt in to billing texts</h2>
+              <p>For owners and staff of OpOrd clients, and their vendors’ billing contacts.</p>
+            </div>
+            <div class="field">
+              <label for="o-name">Full name</label>
+              <input id="o-name" name="name" type="text" autocomplete="name" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="o-phone">Mobile number</label>
+              <input id="o-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="24" placeholder="(555) 555-0123">
+              <span class="hint">US mobile numbers.</span>
+            </div>
+            <div class="field">
+              <label for="o-company">Your company</label>
+              <input id="o-company" name="company" type="text" autocomplete="organization" required maxlength="160">
+            </div>
+            <div class="field">
+              <label for="o-role">Which describes you?</label>
+              <select id="o-role" name="role" required>
+                <option value="" selected disabled>Choose one</option>
+                <option value="client">I own or work for an OpOrd client</option>
+                <option value="vendor">I’m a vendor or supplier to an OpOrd client</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <label class="check">
+              <input id="o-consent" name="consent" type="checkbox" value="yes" required>
+              <span>I agree to receive recurring text messages from OpOrd (Everly Mews LLC) at the number above about pay applications, lien waivers and billing for my company’s projects. Messages may be sent using automated technology. Message frequency varies. Message and data rates may apply. Reply HELP for help or STOP to opt out at any time. Consent is not a condition of any purchase.</span>
+            </label>
+            <div class="hp" aria-hidden="true">
+              <label for="o-website">Leave this empty</label>
+              <input id="o-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <button class="btn btn-primary" type="submit">Agree and sign up</button>
+            <p class="fine">We’ll send one text to confirm. See our <a href="/terms#sms">Text Message Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
+            <div class="status" role="status" aria-live="polite" hidden></div>
+          </form>
+          <div class="done" tabindex="-1" hidden>
+            <div class="tick"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>You’re signed up.</h3>
+            <p data-msg>We’ll send a text to confirm. Reply STOP at any time to opt out.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>

@@ -1,0 +1,17 @@
+{
+  "_help": "Everything a non-developer edits lives here. Run `python3 build.py` after any change, then commit. Empty values are hidden on the site.",
+  "brand": "OpOrd",
+  "legalName": "Everly Mews LLC",
+  "entity": "a Wyoming limited liability company",
+  "domain": "https://opord.co",
+  "tagline": "Managed month-end billing for commercial subcontractors",
+  "cta": "Talk about your month-end",
+  "email": "hello@opord.co",
+  "phone": "",
+  "phoneDisplay": "",
+  "address": [],
+  "engine": "https://app.opord.co",
+  "effective": "October 14, 2026",
+  "founder": { "name": "John Vaughan", "title": "Founder" },
+  "film": { "length": "0:54" }
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact — OpOrd</title>
+<meta name="description" content="Talk to OpOrd about your month-end billing. Tell us how many GCs you bill and what usually holds up your package; we reply personally.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://opord.co/contact">
+<link rel="preload" href="/assets/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css?v=04b55f5d6e">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#F7F6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141A1D" media="(prefers-color-scheme: dark)">
+<meta property="og:site_name" content="OpOrd">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — OpOrd">
+<meta property="og:description" content="Talk to OpOrd about your month-end billing. Tell us how many GCs you bill and what usually holds up your package; we reply personally.">
+<meta property="og:url" content="https://opord.co/contact">
+<meta property="og:image" content="https://opord.co/media/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OpOrd — Every pay app out the door before cutoff.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="OpOrd home">
+      <svg viewBox="0 0 150 150" aria-hidden="true"><circle cx="75" cy="75" r="52" fill="none" stroke="currentColor" stroke-width="22"/></svg>
+      <span class="wordmark">OpOrd</span>
+      <span class="descriptor">Managed month-end billing</span>
+    </a>
+    <nav id="site-nav" aria-label="Main">
+      <ul class="links">
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-end">
+      <a class="btn btn-primary" href="/contact"><span class="l">Talk about your month-end</span><span class="s">Talk to us</span></a>
+      <button class="menu-btn" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+        <svg class="bars" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <svg class="x" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1 class="display h1-sub">Talk about your <em>month-end.</em></h1>
+      <p class="lead">Tell us how many GCs you bill, what usually goes wrong, and when your next cutoff is. We’ll start by deciding whether this is the right problem to fix.</p>
+    </div>
+  </section>
+
+  <section class="page-body">
+    <div class="wrap contact-grid">
+      <div class="form-card">
+        <form id="inquiry" action="https://app.opord.co/hooks/inquiry" method="post" data-ajax data-fallback="You can also email <a href=&quot;mailto:hello@opord.co&quot;>hello@opord.co</a>.">
+          <div class="form-head">
+            <h2 class="h3">Send us a note</h2>
+            <p>Founder-led: a person reads every message and replies personally, usually within a business day or two.</p>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="f-email">Work email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-company">Company</label>
+              <input id="f-company" name="company" type="text" autocomplete="organization" required maxlength="160">
+            </div>
+            <div class="field">
+              <label for="f-gcs">GCs billed per month</label>
+              <select id="f-gcs" name="gcs" required>
+                <option value="" selected disabled>Choose one</option>
+                <option>1–4</option>
+                <option>5–10</option>
+                <option>11–20</option>
+                <option>More than 20</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-issue">What usually holds up your package? <span class="opt">(optional)</span></label>
+            <textarea id="f-issue" name="message" maxlength="4000" placeholder="e.g. lower-tier waivers from suppliers, one GC’s portal, retainage math…"></textarea>
+            <span class="hint">Please don’t include bank details, passwords, or confidential customer information.</span>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="f-website">Leave this empty</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit">Send</button>
+            <span class="small muted">We don’t sell your details or add you to a mailing list.</span>
+          </div>
+          <p class="fine">By sending this you agree to our <a href="/terms">Terms</a>. We use what you send only to reply and to follow up on this conversation — see our <a href="/privacy">Privacy Policy</a>.</p>
+          <div class="status" role="status" aria-live="polite" hidden></div>
+        </form>
+        <div class="done" tabindex="-1" hidden>
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Thank you. It’s with us.</h3>
+          <p data-msg>We reply personally, usually within a business day or two.</p>
+        </div>
+      </div>
+
+      <aside class="reach" aria-label="Other ways to reach us">
+        <div>
+          <h2>Other ways to reach us</h2>
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><a href="mailto:hello@opord.co">hello@opord.co</a><p>For anything at all.</p></div>
+        </div>
+        
+        
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <div><a href="/sms">Billing texts</a><p>Work with one of our clients and want our texts about pay apps and waivers? Opt in on our text messages page.</p></div>
+        </div>
+        <div class="callout plain">
+          <p class="small"><strong>OpOrd</strong> is a trade name of Everly Mews LLC, a Wyoming limited liability company.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="/" aria-label="OpOrd home">
+          <svg viewBox="0 0 150 150" aria-hidden="true"><circle cx="75" cy="75" r="52" fill="none" stroke="currentColor" stroke-width="22"/></svg>
+          <span class="wordmark">OpOrd</span>
+        </a>
+        <p>Managed month-end billing for commercial subcontractors. Complete packages, out the door before cutoff.</p>
+      </div>
+      <nav aria-label="Company">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/#how">How it works</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/security">Security</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Legal">
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy">Privacy policy</a></li>
+          <li><a href="/terms">Terms of service</a></li>
+          <li><a href="/sms">Text messages</a></li>
+        </ul>
+      </nav>
+      <div class="foot-reach">
+        <h2>Reach us</h2>
+        <p><a href="mailto:hello@opord.co">hello@opord.co</a></p>
+        
+        
+        <p><a href="/contact">Send us a note</a></p>
+      </div>
+    </div>
+    <div class="legal-line">
+      <span>© 2026 Everly Mews LLC. OpOrd is a trade name of Everly Mews LLC, a Wyoming limited liability company.</span>
+      <span>Illustrative figures and scenes are labeled as such.</span>
+    </div>
+  </div>
+</footer>
+<script src="/assets/site.js?v=89ef463cc4" defer></script>
+</body>
+</html>
